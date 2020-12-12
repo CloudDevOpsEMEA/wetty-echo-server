@@ -1,8 +1,14 @@
 APP_NAME=wetty-demo
 DOCKER_ACCOUNT=boeboe
-CONTAINER_PORT=3000
-EXPOSED_PORT=8080
 VERSION=1.0.0
+
+WETTY_PORT=3000
+TCP_ECHO_PORT=3001
+UDP_ECHO_PORT=3002
+EXPOSED_WETTY_PORT=8080
+EXPOSED_TCP_ECHO_PORT=8081
+EXPOSED_UDP_ECHO_PORT=8082
+PORT_MAPPING=-p=$(EXPOSED_WETTY_PORT):${WETTY_PORT} -p=$(EXPOSED_TCP_ECHO_PORT):${TCP_ECHO_PORT} -p=$(EXPOSED_UDP_ECHO_PORT):${UDP_ECHO_PORT}/udp
 
 # HELP
 # This will output the help for each task
@@ -24,7 +30,7 @@ build-nc: ## Build the container without caching
 	docker build --no-cache -t $(DOCKER_ACCOUNT)/$(APP_NAME) .
 
 run: ## Run container
-	docker run -i -t --rm -p=$(EXPOSED_PORT):${CONTAINER_PORT} --name="$(APP_NAME)" $(DOCKER_ACCOUNT)/$(APP_NAME)
+	docker run -i -t --rm ${PORT_MAPPING} --name="$(APP_NAME)" $(DOCKER_ACCOUNT)/$(APP_NAME)
 
 run-sh: ## Run interactive shell in container
 	docker run -i -t --entrypoint /bin/sh --name="$(APP_NAME)" $(DOCKER_ACCOUNT)/$(APP_NAME)

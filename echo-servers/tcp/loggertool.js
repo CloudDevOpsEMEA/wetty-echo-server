@@ -1,7 +1,7 @@
 
-const winston = require('winston')
-const moment = require('moment')
-const conf = require('./config')
+const winston = require('winston');
+const moment = require('moment');
+const conf = require('./config');
 
 const transports = [
     new winston.transports.Console({
@@ -9,12 +9,12 @@ const transports = [
         name: 'logs',
         stderrLevels: ['error']
     })
-]
+];
 
 const logger = winston.createLogger({
     format: winston.format.json(),
     transports: transports
-})
+});
 
 const log = async (service, level, msg) => {
     logger.log({
@@ -23,6 +23,6 @@ const log = async (service, level, msg) => {
         level: level,
         message: msg
     })
-}
+};
 
-module.exports = { log }
+module.exports = { log };

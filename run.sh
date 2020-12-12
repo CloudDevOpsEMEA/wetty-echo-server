@@ -1,6 +1,13 @@
 #!/usr/bin/dumb-init /bin/sh
 
-npm start --prefix /echo-servers/tcp &
-npm start --prefix /echo-servers/udp &
+if [ "$TCP_ECHO_ENABLED" = true ] ; then
+  npm start --prefix /echo-servers/tcp &
+fi
 
-npm start --prefix /app -p ${WETTY_PORT} 
+if [ "$UDP_ECHO_ENABLED" = true ] ; then
+  npm start --prefix /echo-servers/udp &
+fi
+
+if [ "$WETTY_ENABLED" = true ] ; then
+  npm start --prefix /wetty-app -p ${WETTY_PORT} &
+fi

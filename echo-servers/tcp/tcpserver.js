@@ -1,19 +1,19 @@
-const net = require('net')
-const conf = require('./config')
+const net = require('net');
+const { config } = require('process');
+const conf = require('./config');
+const { log } = require('./loggertool');
 
-const {
-    log
-} = require('./loggertool')
+const serverHost =  process.env.TCP_ECHO_HOST || config.host;
+const serverPort =  process.env.TCP_ECHO_PORT || config.port;
 
-const server = net.createServer()
+const server = net.createServer();
 
-// emits when any error occurs
 server.on('error', (error) => {
     log("tcp_server", "error", error)
     server.close()
-})
+});
 
-const sockets = []
+const sockets = [];
 server.on('connection', sock => {
 	log("tcp_server", "info", `Connected at ${sock.remoteAddress}:${sock.remotePort}`)
 
@@ -25,8 +25,9 @@ server.on('connection', sock => {
 
 		let timestp = new Date()
 		const response = {
-			description: 'TCP PORT TEST BY RMS Math',
-			serverPort: conf.port,
+			description: 'TCP PORT RESPONSE',
+			serverPort: serverPort,
+			serverHost: serverHost,
 			timestamp: timestp.toJSON(),
 			received: {
 				message: data.toString(),
@@ -42,7 +43,6 @@ server.on('connection', sock => {
 		})
 	})
 
-	// Add a 'close' event handler to this instance of socket
 	sock.on('close', data => {
 		let index = sockets.findIndex( o => {
 			return o.remoteAddress === sock.remoteAddress && o.remotePort === sock.remotePort
@@ -52,18 +52,17 @@ server.on('connection', sock => {
 			sockets.splice(index, 1) 
 		}
 		log("tcp_server", "info", `Socket closed with ${sock.remoteAddress}:${sock.remotePort}`)
-	})	// end sock.on
-})	
+	})
+});
 
 
-// server.listen(conf.port, conf.serverHost, () => {
-server.listen(conf.port, conf.serverHost, () => {
+server.listen(serverPort, serverHost, () => {
 	const address = server.address()
 	const port = address.port
-    const family = address.family
-    const ipaddr = address.address
+  const family = address.family
+  const ipaddr = address.address
     
 	log("tcp_server", "info", 'Server is listening at port ' + port)
-    log("tcp_server", "info", 'Server ip :' + ipaddr)
-    log("tcp_server", "info", 'Server is IP4/IP6 : ' + family)
-})	// server.listen()
+  log("tcp_server", "info", 'Server ip :' + ipaddr)
+  log("tcp_server", "info", 'Server is IP4/IP6 : ' + family)
+});
