@@ -17,7 +17,7 @@ server.on('message', (msg,info) => {
 
     let timestp = new Date()
     const response = {
-        description: 'UDP PORT RESPONSE',
+        description: 'UDP ECHO SERVER RESPONSE',
         serverPort: serverPort,
         serverHost: serverHost,
         timestamp: timestp.toJSON(),
@@ -45,9 +45,10 @@ server.on('listening', () => {
     const family = address.family
     const ipaddr = address.address
 
-    log("udp_server", "info", 'Server is listening at port ' + port)
-    log("udp_server", "info", 'Server ip :' + ipaddr)
-    log("udp_server", "info", 'Server is IP4/IP6 : ' + family)
+    log("udp_server", "info", "UDP Echo Server started")
+    log("udp_server", "info", `UDP Echo Server port      : ${port}`)
+    log("udp_server", "info", `UDP Echo Server ip        : ${ipaddr}`)
+    log("udp_server", "info", `UDP Echo Server protolcol : ${family}`)
 });
 
 server.on('close', () => {

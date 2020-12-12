@@ -14,14 +14,17 @@ DOCKER_BUILD_ARGS = --rm --build-arg DEBUG_TOOLS=false
 endif
 
 # Ports for wetty, tcp and udp echo server
-WETTY_PORT						= 3000
-TCP_ECHO_PORT					= 3001
-UDP_ECHO_PORT					= 3002
-EXPOSED_WETTY_PORT		= 8080
-EXPOSED_TCP_ECHO_PORT	= 8081
-EXPOSED_UDP_ECHO_PORT	= 8082
+WETTY_PORT							= 3000
+TCP_ECHO_PORT						= 3001
+UDP_ECHO_PORT						= 3002
+HTTP_ECHO_PORT					= 3003
 
-PORT_MAPPING=-p=$(EXPOSED_WETTY_PORT):${WETTY_PORT} -p=$(EXPOSED_TCP_ECHO_PORT):${TCP_ECHO_PORT} -p=$(EXPOSED_UDP_ECHO_PORT):${UDP_ECHO_PORT}/udp
+EXPOSED_WETTY_PORT			= 18080
+EXPOSED_TCP_ECHO_PORT		= 18081
+EXPOSED_UDP_ECHO_PORT		= 18082
+EXPOSED_HTTP_ECHO_PORT	= 18083
+
+PORT_MAPPING=-p=$(EXPOSED_WETTY_PORT):${WETTY_PORT} -p=$(EXPOSED_TCP_ECHO_PORT):${TCP_ECHO_PORT} -p=$(EXPOSED_UDP_ECHO_PORT):${UDP_ECHO_PORT}/udp -p=$(EXPOSED_HTTP_ECHO_PORT):${HTTP_ECHO_PORT}
 
 # HELP
 # This will output the help for each task
@@ -43,10 +46,10 @@ build-nc: ## Build the container without caching
 	docker build ${DOCKER_BUILD_ARGS} --no-cache -t $(DOCKER_ACCOUNT)/$(APP_NAME) .
 
 run: ## Run container
-	docker run -it --rm ${PORT_MAPPING} --name="$(APP_NAME)" $(DOCKER_ACCOUNT)/$(APP_NAME)
+	docker run -i -t --rm ${PORT_MAPPING} --name="$(APP_NAME)" $(DOCKER_ACCOUNT)/$(APP_NAME)
 
 run-sh: ## Run interactive shell in container
-	docker run -it --entrypoint /bin/sh --name="$(APP_NAME)" $(DOCKER_ACCOUNT)/$(APP_NAME)
+	docker run -i -t --entrypoint /bin/sh --name="$(APP_NAME)" $(DOCKER_ACCOUNT)/$(APP_NAME)
 
 login-sh: ## Login with shell in running container
 	docker exec -i -t $(APP_NAME) /bin/sh

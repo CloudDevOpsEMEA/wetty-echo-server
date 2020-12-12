@@ -25,7 +25,7 @@ server.on('connection', sock => {
 
 		let timestp = new Date()
 		const response = {
-			description: 'TCP PORT RESPONSE',
+			description: 'TCP ECHO SERVER RESPONSE',
 			serverPort: serverPort,
 			serverHost: serverHost,
 			timestamp: timestp.toJSON(),
@@ -62,7 +62,8 @@ server.listen(serverPort, serverHost, () => {
   const family = address.family
   const ipaddr = address.address
     
-	log("tcp_server", "info", 'Server is listening at port ' + port)
-  log("tcp_server", "info", 'Server ip :' + ipaddr)
-  log("tcp_server", "info", 'Server is IP4/IP6 : ' + family)
+	log("tcp_server", "info", "TCP Echo Server started")
+	log("tcp_server", "info", `TCP Echo Server port     : ${port}`)
+  log("tcp_server", "info", `TCP Echo Server ip       : ${ipaddr}`)
+  log("tcp_server", "info", `TCP Echo Server protocol : ${family}`)
 });

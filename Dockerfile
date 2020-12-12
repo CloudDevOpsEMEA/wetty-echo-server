@@ -1,6 +1,6 @@
 FROM node:carbon-alpine as builder
 LABEL maintainer="Bart Van Bos <bartvanbos@gmail.com>"
-RUN apk add -U build-base python git
+RUN apk add -U --no-cache build-base python git
 WORKDIR /wetty-app
 RUN git clone https://github.com/butlerx/wetty /wetty-app && \
 	  git checkout d0aaa35dbfcb30d8739c22cb3226238ad23a6d7d && \
@@ -11,6 +11,7 @@ RUN git clone https://github.com/butlerx/wetty /wetty-app && \
 COPY echo-servers /echo-servers
 RUN npm --prefix /echo-servers/tcp install
 RUN npm --prefix /echo-servers/udp install
+RUN npm --prefix /echo-servers/http install
 
 
 FROM node:carbon-alpine
@@ -46,9 +47,15 @@ ENV UDP_ECHO_ENABLED=true \
     UDP_ECHO_HOST=0.0.0.0 \
     UDP_ECHO_PORT=3002
 
+# HTTP Echo Server ENV params
+ENV HTTP_ECHO_ENABLED=true \
+    HTTP_ECHO_HOST=0.0.0.0 \
+    HTTP_ECHO_PORT=3003
+
 EXPOSE 3000
-EXPOSE 3001/tcp
+EXPOSE 3001
 EXPOSE 3002/udp
+EXPOSE 3003
 
 WORKDIR /
 ENTRYPOINT "./run.sh"

@@ -1,0 +1,18 @@
+{
+  "name": "http-echo-server",
+  "version": "1.0.0",
+  "description": "Simple HTTP Echo Server",
+  "author": "Bart Van Bos <bartvanbos@gmail.com>",
+  "repository": "https://github.com/boeboe/wetty-echoserver",
+  "main": "httpserver.js",
+  "scripts": {
+    "start": "node httpserver.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.24.0",
+    "winston": "^3.2.1"
+  }
+}
