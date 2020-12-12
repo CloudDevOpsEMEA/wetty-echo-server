@@ -1,14 +1,15 @@
 {
-  "name": "TCPEchoServer",
+  "name": "tcp-echo-server",
   "version": "1.0.0",
   "description": "Simple TCP Echo Server",
-  "repository": "",
+  "author": "Bart Van Bos <bartvanbos@gmail.com>",
+  "repository": "https://github.com/boeboe/wetty-echoserver",
   "main": "tcpserver.js",
   "scripts": {
+    "start": "node tcpserver.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "moment": "^2.24.0",

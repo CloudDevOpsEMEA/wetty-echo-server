@@ -1,14 +1,15 @@
 {
-  "name": "UDPEchoServer",
+  "name": "udp-echo-server",
   "version": "1.0.0",
   "description": "Simple UDP Echo Server",
-  "repository": "",
+  "author": "Bart Van Bos <bartvanbos@gmail.com>",
+  "repository": "https://github.com/boeboe/wetty-echoserver",
   "main": "udpserver.js",
   "scripts": {
+    "start": "node udpserver.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Bart Van Bos",
   "license": "ISC",
   "dependencies": {
     "moment": "^2.24.0",

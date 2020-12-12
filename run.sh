@@ -1,5 +1,6 @@
 #!/usr/bin/dumb-init /bin/sh
 
+npm start --prefix /echo-servers/tcp &
+npm start --prefix /echo-servers/udp &
 
-# Login mode, no SSH_SERVER
 npm start --prefix /app -p ${WETTY_PORT} 
