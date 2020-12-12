@@ -1,8 +1,7 @@
 FROM node:carbon-alpine as builder
 LABEL maintainer="Bart Van Bos <bartvanbos@gmail.com>"
 RUN apk add -U build-base python git
-WORKDIR /app
-#COPY . /app
+WORKDIR /wetty-app
 RUN git clone https://github.com/butlerx/wetty /wetty-app && \
 	  git checkout d0aaa35dbfcb30d8739c22cb3226238ad23a6d7d && \
     yarn && \
@@ -17,13 +16,18 @@ RUN npm --prefix /echo-servers/udp install
 FROM node:carbon-alpine
 LABEL maintainer="Bart Van Bos <bartvanbos@gmail.com>"
 ENV NODE_ENV=production
+ARG DEBUG_TOOLS
+ARG DEBUG_TOOL_LIST
+
 COPY --from=builder /wetty-app/dist /wetty-app/dist
 COPY --from=builder /wetty-app/node_modules /wetty-app/node_modules
 COPY --from=builder /wetty-app/package.json /wetty-app/package.json
 COPY --from=builder /wetty-app/index.js /wetty-app/index.js
 COPY --from=builder /echo-servers /echo-servers
-RUN apk add -U dumb-init bash openssh-client sshpass tree iputils curl wget httpie net-tools netcat-openbsd socat tcpdump bind-tools iproute2
-RUN adduser -D -h /home/admin -s /bin/sh admin && ( echo "admin:admin" | chpasswd ) && adduser admin root
+RUN apk add -U --no-cache dumb-init openssh-client sshpass && \
+    if [ "$DEBUG_TOOLS" = "true" ] ; then apk add -U --no-cache ${DEBUG_TOOL_LIST} ; fi && \
+    adduser -D -h /home/admin -s /bin/sh admin && ( echo "admin:admin" | chpasswd ) && adduser admin root
+
 ADD run.sh /
 
 # Wetty ENV params
