@@ -1,5 +1,5 @@
 # General release info
-APP_NAME				= wetty-demo
+APP_NAME				= wetty-echo-server
 DOCKER_ACCOUNT	= boeboe
 VERSION					= 1.0.0
 
@@ -7,10 +7,10 @@ VERSION					= 1.0.0
 ifeq ($(DEBUG), true)
 DOCKER_TAG        = ${VERSION}-dbg
 DEBUG_TOOL_LIST		= bash tree vim nano strace iputils curl wget httpie net-tools netcat-openbsd socat tcpdump bind-tools iproute2 tcptraceroute iperf3
-DOCKER_BUILD_ARGS	= --rm --build-arg DEBUG_TOOLS=true --build-arg DEBUG_TOOL_LIST="${DEBUG_TOOL_LIST}"
+DOCKER_BUILD_ARGS	= --rm --build-arg DEBUG_TOOLS=true --build-arg DEBUG_TOOL_LIST="${DEBUG_TOOL_LIST}" -f Dockerfile
 else
 DOCKER_TAG        = ${VERSION}
-DOCKER_BUILD_ARGS = --rm --build-arg DEBUG_TOOLS=false
+DOCKER_BUILD_ARGS = --rm --build-arg DEBUG_TOOLS=false -f Dockerfile
 endif
 
 # Ports for wetty, tcp and udp echo server
