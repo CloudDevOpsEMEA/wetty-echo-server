@@ -15,7 +15,7 @@ In order to provide proper container support for multiple processes running, [du
 
 The source code and docker containers are available at the following locations.
 
-- Github: https://github.com/CloudDevOpsEMEA/wetty-echo-server
+- Github: https://github.com/boeboe/wetty-echo-server
 - Dockerhub: https://hub.docker.com/r/boeboe/wetty-echo-server 
 
 ## Usage
