@@ -25,7 +25,7 @@ COPY --from=builder /wetty-app/node_modules /wetty-app/node_modules
 COPY --from=builder /wetty-app/package.json /wetty-app/package.json
 COPY --from=builder /wetty-app/index.js /wetty-app/index.js
 COPY --from=builder /echo-servers /echo-servers
-RUN apk add -U --no-cache dumb-init openssh-client sshpass && \
+RUN apk add -U --no-cache dumb-init openssh-client sshpass curl netcat-openbsd && \
     if [ "$DEBUG_TOOLS" = "true" ] ; then apk add -U --no-cache ${DEBUG_TOOL_LIST} ; fi && \
     adduser -D -h /home/admin -s /bin/sh admin && ( echo "admin:admin" | chpasswd ) && adduser admin root
 

@@ -6,7 +6,7 @@ VERSION					= 1.0.0
 # With or without debug tools
 ifeq ($(DEBUG), true)
 DOCKER_TAG        = ${VERSION}-dbg
-DEBUG_TOOL_LIST		= bash tree vim nano strace iputils curl wget httpie net-tools netcat-openbsd socat tcpdump bind-tools iproute2 tcptraceroute iperf3
+DEBUG_TOOL_LIST		= bash tree vim nano strace iputils wget httpie net-tools socat tcpdump bind-tools iproute2 tcptraceroute iperf3
 DOCKER_BUILD_ARGS	= --rm --build-arg DEBUG_TOOLS=true --build-arg DEBUG_TOOL_LIST="${DEBUG_TOOL_LIST}" -f Dockerfile
 else
 DOCKER_TAG        = ${VERSION}
