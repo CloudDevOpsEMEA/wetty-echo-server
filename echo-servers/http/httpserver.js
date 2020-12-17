@@ -36,7 +36,7 @@ const server = http.createServer(function (req, res) {
 
     if (parsedURL.pathname == '/') {
         res.statusCode = 200
-        res.end(JSON.stringify(response))
+        res.end(JSON.stringify(response, null, 2))
     } else if (parsedURL.pathname == '/slow') {
         res.statusCode = 200
         setTimeout(() => { 

@@ -27,7 +27,7 @@ server.on('message', (msg,info) => {
             fromPort: info.port
         }
     }
-    const data = Buffer.from(JSON.stringify(response))
+    const data = Buffer.from(JSON.stringify(response, null, 2))
 
     server.send(data, info.port, info.address, (error, bytes) => {
         if(error){

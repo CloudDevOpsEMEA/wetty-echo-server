@@ -35,7 +35,7 @@ server.on('connection', sock => {
 				fromPort: sock.remotePort
 			}
 		}
-		const dataBuffer = Buffer.from(JSON.stringify(response))
+		const dataBuffer = Buffer.from(JSON.stringify(response, null, 2))
 
 		// Write the data back to all the connected, the client will receive it as data from the server
 		sockets.forEach((sock, index, array) => {
