@@ -25,7 +25,7 @@ The source code and docker containers are available at the following locations.
 The following docker ENV variables can be used to tweak the behavior of this container.
 
 | ENV Variable      | Default | Usage                   |
-|-------------------|---------|-------|-----------------|
+|-------------------|---------|-------------------------|
 | WETTY_ENABLED     | true    | enable web terminal     |
 | WETTY_PORT        | 3000    | web terminal port       |
 | TCP_ECHO_ENABLED  | true    | enable tcp echo server  |
